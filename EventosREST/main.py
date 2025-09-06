@@ -1,16 +1,31 @@
-# This is a sample Python script.
+from fastapi import FastAPI
+import uvicorn
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+app=FastAPI()
 
+@app.get("/")
+async def inicio():
+    return "Bienvenido a la API REST de EVENTOS"
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+@app.post("/eventos")
+async def crearEvento():
+    return {"mensaje":"Creando un evento"}
+@app.put("/eventos")
+async def modificarEvento():
+    return {"mensaje":"Editando un evento"}
 
+@app.get("/eventos")
+async def consultarEventos():
+    return {"mensaje":"Consultado un evento"}
+@app.get("/eventos/{idEvento}")
+async def consultaIndividual(idEvento:int):
+    return {"mensaje":f'Consultando el evento con id:{idEvento}'}
+@app.delete("/eventos")
+async def eliminarEvento():
+    return {"mensaje":"Eliminando un evento"}
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('Roberto')
+    uvicorn.run("main:app",reload=True,port=8000,host="127.0.0.1")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

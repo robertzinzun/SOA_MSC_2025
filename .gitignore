@@ -11,11 +11,7 @@
 *.DS_Store
 
 #ignorar de python 
-AdameV/
 __pycache__/
-*.pyc
-*.pyo
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
+lib/
+
+pyvenv.cfg

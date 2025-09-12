@@ -3,7 +3,7 @@ import uvicorn
 
 from dao.EventosDAO import EventosDAO
 from dao.database import Conexion
-from models.EventosModel import vEventos,Salida,Eventos,EventoSalida
+from models.EventosModel import vEventos, Salida, Eventos, EventoSalida, EventoUpdate
 
 app=FastAPI()
 
@@ -21,9 +21,10 @@ async def inicio():
 async def crearEvento(evento:Eventos,request:Request):
     eDAO=EventosDAO(request.app.session)
     return eDAO.agregar(evento)
-@app.put("/eventos")
-async def modificarEvento():
-    return {"mensaje":"Editando un evento"}
+@app.put("/eventos/{idEvento}",summary="Editar Evento",tags=["Eventos"],response_model=Salida)
+async def modificarEvento(idEvento:int,eventoU:EventoUpdate,request:Request):
+    eDAO=EventosDAO(request.app.session)
+    return eDAO.modificar(idEvento,eventoU)
 
 @app.get("/eventos",response_model=list[vEventos],tags=["Eventos"],summary=" Consulta de Eventos")
 async def consultarEventos(request:Request)->list[vEventos]:

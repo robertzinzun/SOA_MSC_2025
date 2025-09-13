@@ -29,7 +29,8 @@ class Salida(BaseModel):
     mensaje:str
 class EventoSalida(Salida):
     evento:vEventos|None=None
-
+class EventosSalida(Salida):
+    eventos:list[vEventos]|None=None
 class EventoUpdate(SQLModel):
     nombre:Optional[str]=None
     cantidadparticipantes:Optional[int]=None

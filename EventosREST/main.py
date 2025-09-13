@@ -3,8 +3,8 @@ import uvicorn
 
 from dao.EventosDAO import EventosDAO
 from dao.database import Conexion
-from models.EventosModel import vEventos, Salida, Eventos, EventoSalida, EventoUpdate
-
+from models.EventosModel import vEventos, Salida, Eventos, EventoSalida, EventoUpdate, EventosSalida
+from datetime import date
 app=FastAPI()
 
 @app.on_event("startup")
@@ -34,10 +34,20 @@ async def consultarEventos(request:Request)->list[vEventos]:
 async def consultaIndividual(idEvento:int,request:Request)->EventoSalida:
     eDAO=EventosDAO(request.app.session)
     return eDAO.consultarPorId(idEvento)
-@app.delete("/eventos")
-async def eliminarEvento():
-    return {"mensaje":"Eliminando un evento"}
-
+@app.delete("/eventos/{idEvento}",summary="Eliminar Evento",tags=["Eventos"],response_model=Salida)
+async def eliminarEvento(idEvento:int,request:Request)->Salida:
+    eDAO=EventosDAO(request.app.session)
+    return eDAO.eliminar(idEvento)
+@app.patch('/eventos/{idEvento}/cambiarEstado/{estatus}',summary="Cambiar de estado",
+           tags=["Eventos"],response_model=Salida)
+def cambiarEstado(idEvento:int,estatus:str,request:Request)->Salida:
+    eDAO=EventosDAO(request.app.session)
+    return eDAO.cambiarEstado(idEvento,estatus)
+@app.get('/eventos/fecha/{fecha}',summary="Consulta por fecha",tags=["Eventos"],
+         response_model=EventosSalida)
+def consultarPorFecha(fecha:date,request:Request)->EventosSalida:
+    eDAO=EventosDAO(request.app.session)
+    return eDAO.consultarPorFecha(fecha)
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     uvicorn.run("main:app",reload=True,port=8000,host="127.0.0.1")

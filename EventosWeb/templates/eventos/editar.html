@@ -1,0 +1,143 @@
+{% extends 'comunes/base.html' %}
+{% block navbar %}
+    {% include 'comunes/menu.html' %}
+{% endblock %}
+{% block principal %}
+    <h1 class="bg bg-info">EDITAR EVENTO</h1>
+    <form action="/eventos/editar" method="post">
+        <div class="form-group">
+            <label>ID:</label>
+            <input type="text" name="id" id="id" class="form-control" required placeholder="id" readonly>
+        </div>
+        <div class="form-group">
+            <label>Nombre:</label>
+            <input type="text" name="nombre" id="nombre" class="form-control" required placeholder="Nombre del Evento">
+        </div>
+        <div class="form-group">
+            <label>Cantidad de Participante:</label>
+            <input type="number" name="participantes" id="participantes" class="form-control" required placeholder="Participantes" value="1" max="100" min="0">
+        </div>
+        <div class="form-group">
+            <label>Descripción:</label>
+            <input type="text" name="descripcion" id="descripcion" class="form-control" required placeholder="descripcion">
+        </div>
+        <div class="form-group">
+            <label>Tipo:</label>
+            <select name="idTipo">
+                 <option value="0">-Elige un Tipo de Evento-</option>
+                <!--
+                {% if opciones %}
+                {% for opcion in opciones %}
+                    <option value="{{opcion['idOpcion']}}">{{opcion['nombre']}}</option>
+                {% endfor %}
+                {% endif %}
+                -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Departamento:</label>
+            <select name="idDepartamento">
+                 <option value="0">-Elige un Departamento-</option>
+                <!--
+                Llenar combo
+                -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Estatus:Pendiente</label>
+        </div>
+            <button class="btn btn-primary" id="modificar"> <span class="glyphicon glyphicon-floppy-disk"></span> Guardar </button>
+            <a class="btn btn-success" href="/eventos/iniciar/1"> <span class="glyphicon glyphicon-play-circle"></span> Iniciar </a>
+            <a class="btn btn-danger" type="button" data-toggle="modal" data-target="#cancelar" > <span class="glyphicon glyphicon-remove-circle"></span> Cancelar </a>
+            <a class="btn btn-danger" type="button" data-toggle="modal" data-target="#eliminar" > <span class="glyphicon glyphicon-trash"></span> Eliminar </a>
+            <a class="btn btn-info" href="/eventos/finalizar/1"> <span class="glyphicon glyphicon-thumbs-up"></span> Finalizar</a>
+            <a class="btn btn-info" type="button" data-toggle="modal" data-target="#reprogramar"> <span class="glyphicon glyphicon-time"></span> Reprogramar</a>
+        <a class="btn btn-warning" href="/eventos"> <span class="glyphicon glyphicon-arrow-left"></span> Regresar </a>
+        {% if get_flashed_messages()%}
+            {% for m in get_flashed_messages()%}
+            <div class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>{{m}}</strong>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </form>
+    <!-- Modal -->
+    <div id="eliminar" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Eliminar Evento</h4>
+          </div>
+          <div class="modal-body">
+            <p>¿ Estas seguro de eliminar el evento  ?</p>
+          </div>
+          <div class="modal-footer">
+              <a href="/eventos/eliminar/1" class="btn btn-info">Aceptar</a>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div id="cancelar" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Cancelar Evento</h4>
+          </div>
+          <div class="modal-body">
+            <p>¿ Estas seguro de cancelar el evento  ?</p>
+          </div>
+          <div class="modal-footer">
+              <a href="/eventos/cancelar/1" class="btn btn-info">Aceptar</a>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div id="reprogramar" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Reprogramar Evento</h4>
+          </div>
+          <div class="modal-body">
+              <form action="/eventos/reprogramar" method="post">
+                  <div class="form-group">
+                    <label>ID:</label>
+                    <input type="text" name="idR" id="idR" class="form-control" required placeholder="id" readonly>
+                  </div>
+                  <div class="form-group">
+                      <label>Nombre:</label>
+                      <input type="text" name="nombreR" id="nombreR" class="form-control" required placeholder="Nombre del Evento" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label>Fecha de Incio:</label>
+                    <input type="date" name="fechaInicio" id="fechaInicio" class="form-control" required placeholder="Fecha inicio">
+                </div>
+                <div class="form-group">
+                    <label>Fecha Fin:</label>
+                    <input type="date" name="fechaFin" id="fechaFin" class="form-control" required placeholder="fechaFin">
+                </div>
+                  <button type="submit" class="btn btn-primary"><span class="glyphicon  glyphicon glyphicon-ok"></span>Aceptar</button>
+                  <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+              </form>
+
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+
+      </div>
+    </div>
+{% endblock %}

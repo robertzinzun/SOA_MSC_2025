@@ -1,0 +1,41 @@
+{% extends 'comunes/base.html' %}
+{% block navbar %}
+    {% include 'comunes/menu.html' %}
+{% endblock %}
+{% block principal %}
+    <h1 class="bg bg-info">LISTADO DE EVENTOS</h1>
+    <!--if para preguntar el estatus de la respuesta-->
+
+    <a class="btn btn-primary" href="/eventos/nuevo"> <span class="glyphicon glyphicon-plus"></span> Agregar </a>
+    <table class="table">
+        <thead>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>CANTIDAD DE PARTICIPANTES</th>
+            <th>FECHA INICIO</th>
+            <th>FECHA FIN</th>
+            <th>ESTATUS</th>
+            <th>DESCRIPCION</th>
+            <th>TIPO DE EVENTO</th>
+            <th>DEPARTAMENTOS</th>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>1</td>
+                <td>Concurso ACC</td>
+                <td>21</td>
+                <td>2025-09-12</td>
+                <td>2025-09-12</td>
+                <td>Pendiente</td>
+                <td>Consurso de Programacion</td>
+                <td>Consurso</td>
+                <td>ISC</td>
+                <td><a href="/eventos/ver/1"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+            </tr>
+
+        </tbody>
+    </table>
+    <a href="/principal" class="btn btn-success"> <span class="glyphicon glyphicon-arrow-left"></span> Regresar </a>
+
+{% endblock %}

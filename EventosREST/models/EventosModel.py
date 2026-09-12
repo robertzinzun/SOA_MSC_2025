@@ -1,6 +1,6 @@
 from sqlmodel import SQLModel,Field
 from datetime import date
-from typing import Optional
+from typing import Optional,Literal
 from pydantic import BaseModel
 
 class vEventos(SQLModel,table=True):
